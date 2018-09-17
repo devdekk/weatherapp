@@ -4,7 +4,7 @@
      {{ AppName }}
     </b-navbar-brand>
         <b-navbar-nav class="ml-auto">
-          <button type="button" v-on:click="emitRefresh" class="btn btn-block btn-info"><icon name="sync-alt"></icon></button>
+          <button type="button" v-on:click="refresh" class="btn btn-block btn-info"><icon name="sync-alt"></icon></button>
         </b-navbar-nav>
     </b-navbar>
 </template>
@@ -22,8 +22,8 @@ export default {
     }
   },
   methods: {
-    emitRefresh () {
-        this.$emit('refreshPage')
+    refresh () {
+        this.$store.dispatch('updateWeatherData')
     }
   }
 }

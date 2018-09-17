@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <weather-nav v-on:refreshPage="refreshPage"> </weather-nav>
+    <weather-nav> </weather-nav>
     <div class="container">
-      <weather-search v-on:emitSearch="updateSearch"> </weather-search>
+      <weather-search></weather-search>
         
-      <weather-sort v-on:emitSelectedSort="updateSort"> </weather-sort>
+      <weather-sort></weather-sort>
 
-      <weather-list :selectedSortValue="selectedSort" :lastUpdateValue="lastUpdate"
-                    :countrySearchValue="countrySearch" :conditionSearchValue="conditionSearch">
-      </weather-list>
+      <weather-list></weather-list>
     </div>
   </div>
 </template>
@@ -25,31 +23,11 @@ import WeatherList from './components/WeatherList.vue'
 
 export default {
   name: 'app',
-  data() {
-    return {
-      countrySearch: '',
-      conditionSearch: '',
-      selectedSort: '',
-      lastUpdate: ''
-    }
-  },
   components: {
     WeatherNav,
     WeatherSearch,
     WeatherSort,
     WeatherList
-  },
-  methods: {
-    updateSearch(country,condition){
-      this.countrySearch = country
-      this.conditionSearch = condition
-    },
-    updateSort(sort){
-      this.selectedSort = sort
-    },
-    refreshPage(){
-      this.lastUpdate = new Date().getTime().toString()
-    }
   }
 }
 </script>

@@ -30,15 +30,15 @@ export default {
   },
   watch: {
       countrySearch(){
-          this.emitSearch()
+          this.updateSearch()
       },
       conditionSearch(){
-          this.emitSearch()
+          this.updateSearch()
       }
   },
   methods: {
-    emitSearch (event) {
-        this.$emit('emitSearch', this.countrySearch, this.conditionSearch)
+    updateSearch (event) {
+        this.$store.commit('updateSearch', { country: this.countrySearch, condition: this.conditionSearch })
     }
   }
 }

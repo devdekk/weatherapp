@@ -1,7 +1,7 @@
 <template>
     <div  id="sortButtons" class="row">
         <div style="width: 33%" class="btn-group btn-group-justified" v-for="(button,key) in sortButtons" :key="key">
-            <button type="button" v-bind:class="{ active: button.sort == selectedSort  }" v-on:click="updateSortState(button.sort)"
+            <button type="button" :disabled="hasErrors" v-bind:class="{ active: button.sort == selectedSortMenu  }" v-on:click="updateSortState(button.sort)"
                     class="btn btn-block btn-info">{{ button.name }}</button>
         </div>
     </div>
@@ -12,6 +12,11 @@
 // Import config data
 import config from '../config'
 
+// added mapGetters 
+// hasErrors to check errors state - disabled sort menu if errors exist
+// selectedSortMenu to check selectedSort state
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'WeatherSort',
   data() {
@@ -19,6 +24,12 @@ export default {
       sortButtons: [],
       selectedSort: ''
     }
+  },
+  computed:{
+    ...mapGetters([
+      'hasErrors',
+      'selectedSortMenu'
+    ])
   },
   created() {
     // Import sort buttons from config

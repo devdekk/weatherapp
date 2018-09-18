@@ -8,6 +8,7 @@ export default {
 
     updateSort(state,sort){
         // only update sort state if different sort is selected
+        // I noticed clicking on sort buttons multiple times was messing with sort so I added this extra check
         if (state.selectedSort !== sort){
             state.selectedSort = sort;
 
@@ -39,18 +40,25 @@ export default {
     // Mutations called from WeatherList.vue && WeatherNav.vue
 
     updateWeatherData(state){
-        // reset store weather data so animation works
+        // reset state store data as it will need to be empty when refresh is called
         state.weatherData = []
+        state.errors = []
 
         // retreive weather data from API
         axios.get(config.ProxyAPI + config.WeatherAPI)
         .then(response => {
             state.weatherData = response.data.data;
+            state.loading = false
         })
         .catch(e => {
-            // add network errors
+            // add errors to store so it can be used to display error state
             state.errors.push(e)
         })
+    },
+
+    // Set load state a new boolean value
+    updateLoad(state, value){
+        state.loading = value
     }
 
 }

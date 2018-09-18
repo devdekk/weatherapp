@@ -15,11 +15,17 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
 
     state: {
+        // state to manage weatherData
         weatherData: [],
+        // state to manage selected sort menu item
         selectedSort: '',
+        // states to manage search items
         countrySearch: '',
         conditionSearch: '',
-        errors: []
+        // states to manage errors and loading
+        errors: [],
+        loading: true
+
     },
     getters,
     mutations,

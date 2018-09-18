@@ -1,7 +1,14 @@
 <template>
+
+    <div>
+
+    <weather-error v-show="hasErrors"></weather-error>
+    <weather-load v-show="isLoading"></weather-load>
+    
     <div class="weatherList">
-      <transition-group name="list" enter-active-class="animated bounceInRight" 
-                                    leave-active-class="animated bounceOutLeft">
+
+      <transition-group name="list" enter-active-class="animated fadeIn" 
+                                    leave-active-class="animated fadeOut">
         <ul class="list-group mb-3 row"  v-for="(item,key) in filteredList" :key="key">
           <li class="list-group-item" >
               <div class="row">
@@ -29,6 +36,8 @@
         </ul>
       </transition-group>
     </div>
+
+    </div>
 </template>
 
 <script>
@@ -37,15 +46,30 @@ import axios from 'axios'
 // Import config data
 import config from '../config'
 
+// Updated how I was accessing my getters by adding mapGetters
+// This provides better readability for multiple getters 
+// and still allows adding of more computed properties if need be
+import { mapGetters} from 'vuex'
+
+// Created new components for error and load states
+import WeatherError from './WeatherError.vue'
+import WeatherLoad from './WeatherLoad.vue'
+
 export default {
   name: 'WeatherList',
   created() {
     this.$store.dispatch('updateWeatherData')
   },
-  computed: {
-    filteredList: function() {
-      return this.$store.getters.getFilteredList
-    }
+  computed:{
+    ...mapGetters([
+      'filteredList',
+      'hasErrors',
+      'isLoading'
+    ])
+  },
+  components: {
+    WeatherError,
+    WeatherLoad
   },
   methods: {
     getImage: function(item){

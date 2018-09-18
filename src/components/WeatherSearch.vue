@@ -5,7 +5,7 @@
                 <b-input-group-prepend  is-text>
                     <icon name="search"></icon>
                 </b-input-group-prepend>
-                <b-form-input v-model="countrySearch" type="text" placeholder="Search Country..."></b-form-input>
+                <b-form-input v-model="countrySearch" :disabled="hasErrors" type="text" placeholder="Search Country..."></b-form-input>
             </b-input-group>
         </div>
         <div class="col-sm-6">
@@ -13,13 +13,18 @@
                 <b-input-group-prepend  is-text>
                     <icon name="search"></icon>
                 </b-input-group-prepend>
-                <b-form-input v-model="conditionSearch" type="text" placeholder="Search Weather Condition..."></b-form-input>
+                <b-form-input v-model="conditionSearch" :disabled="hasErrors" type="text" placeholder="Search Weather Condition..."></b-form-input>
             </b-input-group>
         </div>
     </div>
 </template>
 
 <script>
+
+// added mapGetters 
+// hasErrors to check errors state - disabled search if errors exist
+import { mapGetters} from 'vuex'
+
 export default {
   name: 'WeatherSearch',
   data() {
@@ -27,6 +32,11 @@ export default {
       countrySearch: '',
       conditionSearch: ''
     }
+  },
+    computed:{
+    ...mapGetters([
+      'hasErrors'
+    ])
   },
   watch: {
       countrySearch(){

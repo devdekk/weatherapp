@@ -24,7 +24,8 @@ export const store = new Vuex.Store({
         conditionSearch: '',
         // states to manage errors and loading
         errors: [],
-        loading: true
+        hasErrors: '',
+        isLoading: true
 
     },
     getters,

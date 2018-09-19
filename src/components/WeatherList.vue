@@ -58,7 +58,7 @@ import WeatherLoad from './WeatherLoad.vue'
 export default {
   name: 'WeatherList',
   created() {
-    this.$store.dispatch('updateWeatherData')
+    this.$store.dispatch('GET_DATA')
   },
   computed:{
     ...mapGetters([

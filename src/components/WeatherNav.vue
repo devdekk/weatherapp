@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     refresh () {
-        this.$store.dispatch('updateWeatherData')
+        this.$store.dispatch('GET_DATA')
     }
   }
 }

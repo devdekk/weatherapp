@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     updateSearch (event) {
-        this.$store.commit('updateSearch', { country: this.countrySearch, condition: this.conditionSearch })
+        this.$store.commit('UPDATE_SEARCH', { country: this.countrySearch, condition: this.conditionSearch })
     }
   }
 }

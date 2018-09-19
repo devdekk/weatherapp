@@ -44,7 +44,7 @@ export default {
       // Function that will update selected sort in store
       updateSortState(sort){
           this.selectedSort = sort
-          this.$store.commit('updateSort', sort)
+          this.$store.commit('UPDATE_SORT', sort)
       }
   }
 }

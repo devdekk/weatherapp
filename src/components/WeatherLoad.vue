@@ -1,9 +1,19 @@
 <template>
-      <h6>Loading...</h6>
+    <div class="container">
+      <clip-loader></clip-loader>
+    </div>
 </template>
 
 <script>
+
+// Add spinner by using vue-spinner
+// @https://github.com/greyby/vue-spinner
+import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+
 export default {
-  name: 'WeatherLoad'
+  name: 'WeatherLoad',
+  components: {
+    ClipLoader
+  }
 }
 </script>

@@ -45,7 +45,7 @@ export default {
         store.errors = []
 
         // call API from Helper
-        doAsync('UPDATE_API',config.ProxyAPI + config.WeatherAPI)
+        doAsync('UPDATE_API',config.ProxyAPI + config.WeatherAPI, config.ProxyAPI + config.CityAPI)
     },
 
     UPDATE_API_SUCCESS(store, data){

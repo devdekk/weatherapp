@@ -15,11 +15,11 @@ export default {
 
     // getters to retreive error and loading states
     hasErrors(store){
-        return store.errors.length > 0
+        return store.hasErrors
     },
 
     isLoading(store){
-        return store.loading
+        return store.isLoading
     },
 
     // Getters called from WeatherSort.vue

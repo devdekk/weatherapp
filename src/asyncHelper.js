@@ -7,11 +7,18 @@ import axios from 'axios'
 // 
 import { store } from './store/store'
 
-const asyncAPI = (mutationType, url) => {
+const asyncAPI = (mutationType, weatherUrl, cityUrl) => {
   store.commit(mutationType + '_LOADING')
-  axios(url)
-    .then(response => {
-      store.commit(mutationType + '_SUCCESS', response.data.data)
+  axios(weatherUrl)
+    .then(weatherResponse => {
+      axios(cityUrl)
+       .then(cityResponse => {
+         console.log(cityResponse)
+        store.commit(mutationType + '_SUCCESS', weatherResponse.data.data)
+       }).catch(error => {
+        store.commit(mutationType + '_ERROR', error)
+      })
+      
     })
     .catch(error => {
       store.commit(mutationType + '_ERROR', error)

@@ -27,6 +27,11 @@ export default {
     // getter to retreive selected sort menu
     selectedSortMenu(store){
         return store.selectedSort
+    },
+
+    // getter to retreive list of open children items
+    getListChildren(store){
+        return store.openListChild
     }
     
 }

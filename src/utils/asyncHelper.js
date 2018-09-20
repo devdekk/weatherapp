@@ -4,21 +4,28 @@
 
 // import axios for api call
 import axios from 'axios'
-// 
+
 import { store } from '../store/store'
+// Add arrayHelper to combine weather and city arrays
+import combinedArray from './arrayHelper'
 
 const asyncAPI = (mutationType, weatherUrl, cityUrl) => {
+  // Set Loading State
   store.commit(mutationType + '_LOADING')
+  // Weather API call
   axios(weatherUrl)
     .then(weatherResponse => {
+      // City API call
       axios(cityUrl)
        .then(cityResponse => {
-         store.commit(mutationType + '_SUCCESS', weatherResponse.data.data)
+        // When both API's are loaded commit combined array to store
+         store.commit(mutationType + '_SUCCESS', combinedArray(weatherResponse.data.data, cityResponse.data.records))
        }).catch(error => {
         store.commit(mutationType + '_ERROR', error)
       })
     })
     .catch(error => {
+      // Set Error state
       store.commit(mutationType + '_ERROR', error)
     })
 }

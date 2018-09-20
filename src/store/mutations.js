@@ -12,9 +12,7 @@ export default {
         // I noticed clicking on sort buttons multiple times was messing with sort so I added this extra check
         if (store.selectedSort !== sort){
             store.selectedSort = sort
-
             store.weatherData = sortArray(store.weatherData, store.selectedSort)
-            
         }   
     },
 
@@ -34,25 +32,41 @@ export default {
         store.errors = []
         store.hasErrors = false
         store.isLoading = false
+        store.openListChild = []
 
         // call API from Helper
         doAsync('UPDATE_API',config.ProxyAPI + config.WeatherAPI, config.ProxyAPI + config.CityAPI)
     },
 
-    UPDATE_API_SUCCESS(store, data){
-        store.weatherData = sortArray(data, store.selectedSort)
+    // Mutations that are called from API
+
+    UPDATE_API_SUCCESS(store, weatherData){
+        // Add sorted array to store
+        store.weatherData = sortArray(weatherData, store.selectedSort)
         store.isLoading = false
     },
 
+    // Set error state and disable loading state
     UPDATE_API_ERROR(store, e){
         store.hasErrors = true
         store.errors.push(e)
         store.isLoading = false
     },
 
-    // Set load store a new boolean value
+    // Set loading state
     UPDATE_API_LOADING(store){
         store.isLoading = true
+    },
+
+    // Add or remove list child from store array
+    UPDATE_LIST_CHILD(store, key){
+
+        if (store.openListChild.includes(key)){
+            var index = store.openListChild.indexOf(key)
+            store.openListChild.splice(index, 1);
+        }else{
+            store.openListChild.push(key)
+        }
     }
 
 }

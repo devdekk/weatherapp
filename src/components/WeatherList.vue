@@ -7,10 +7,10 @@
     
     <div class="weatherList">
 
-      <transition-group name="list" enter-active-class="animated fadeIn" 
-                                    leave-active-class="animated fadeOut">
+      <transition-group name="list" enter-active-class="animated bounceInRight" 
+                                    leave-active-class="animated bounceOutLeft">
         <ul class="list-group mb-3 row"  v-for="(item,key) in filteredList" :key="key">
-          <li class="list-group-item" >
+          <li class="list-group-item" @click="updateListChild(item._name)">
               <div class="row">
                 <div class="col-sm-2">
                     <img :src="getImage(item)">
@@ -32,7 +32,10 @@
                     <small  class="text-muted"> Last Updated at {{ timeSinceUpdate(item._weatherLastUpdated) }}</small>
                 </div>
               </div>
-          </li>
+          </li> 
+          <transition name="child" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <weather-list-child v-show="keyInChildList(item._name)" :item=item></weather-list-child>
+          </transition>
         </ul>
       </transition-group>
     </div>
@@ -54,6 +57,7 @@ import { mapGetters} from 'vuex'
 // Created new components for error and load states
 import WeatherError from './WeatherError.vue'
 import WeatherLoad from './WeatherLoad.vue'
+import WeatherListChild from './WeatherListChild.vue'
 
 export default {
   name: 'WeatherList',
@@ -64,12 +68,14 @@ export default {
     ...mapGetters([
       'filteredList',
       'hasErrors',
-      'isLoading'
+      'isLoading',
+      'getListChildren'
     ])
   },
   components: {
     WeatherError,
-    WeatherLoad
+    WeatherLoad,
+    WeatherListChild
   },
   methods: {
     getImage: function(item){
@@ -79,6 +85,16 @@ export default {
     // Function to parse JSON timestamp and display first 5 characters
     timeSinceUpdate: function(timestamp){
         return new Date(timestamp).toTimeString().substr(0,5)
+    },
+    // This will call a mutation to add or remove the key in a store array
+    // I initially used the array list key but decided to use the city/suburb name as the key
+    // This will ensure the childs state is kept the same even if the search/sort state is updated
+    updateListChild(key){
+      this.$store.commit('UPDATE_LIST_CHILD', key)
+    },
+    // Function to show child item if it is in store array
+    keyInChildList(key){
+      return this.getListChildren.includes(key)
     }
   }
 }
@@ -91,11 +107,18 @@ export default {
     padding: 15px;
 }
 
+.cityData{
+  margin-top: 10px;
+  height: 3em;
+  background-color: white;
+  box-shadow: 3px 2px #888888;
+}
+
 ul li {
     margin-bottom: 2px;
     color: #3E5252;
     height: 10em;
-    box-shadow: 3px 2px #888888;;
+    box-shadow: 3px 2px #888888;
   }
 
 @keyframes bounce-in {

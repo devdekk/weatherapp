@@ -4,7 +4,7 @@
      {{ AppName }}
     </b-navbar-brand>
         <b-navbar-nav class="ml-auto">
-          <button type="button" v-on:click="refresh" class="btn btn-block btn-info"><icon name="sync-alt"></icon></button>
+          <button type="button" :disabled="isLoading" v-on:click="refresh" class="btn btn-block btn-info"><icon name="sync-alt"></icon></button>
         </b-navbar-nav>
     </b-navbar>
 </template>
@@ -14,12 +14,21 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+// added mapGetters 
+// isLoading to check loading state - disabled refresh when loading
+import { mapGetters} from 'vuex'
+
 export default {
   name: 'WeatherNav',
   data() {
     return {
       AppName: 'Weather App',
     }
+  },
+  computed:{
+    ...mapGetters([
+      'isLoading'
+    ])
   },
   methods: {
     refresh () {

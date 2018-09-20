@@ -29,9 +29,11 @@ export default {
     // Mutations called from WeatherList.vue && WeatherNav.vue
 
     GET_DATA(store){
-        // reset store store data as it will need to be empty when refresh is called
+        // reset store data
         store.weatherData = []
         store.errors = []
+        store.hasErrors = false
+        store.isLoading = false
 
         // call API from Helper
         doAsync('UPDATE_API',config.ProxyAPI + config.WeatherAPI, config.ProxyAPI + config.CityAPI)
@@ -45,6 +47,7 @@ export default {
     UPDATE_API_ERROR(store, e){
         store.hasErrors = true
         store.errors.push(e)
+        store.isLoading = false
     },
 
     // Set load store a new boolean value

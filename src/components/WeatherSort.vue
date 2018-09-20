@@ -1,7 +1,7 @@
 <template>
     <div  id="sortButtons" class="row">
         <div style="width: 33%" class="btn-group btn-group-justified" v-for="(button,key) in sortButtons" :key="key">
-            <button type="button" :disabled="hasErrors" v-bind:class="{ active: button.sort == selectedSortMenu  }" v-on:click="updateSortState(button.sort)"
+            <button type="button" :disabled="hasErrors || isLoading" v-bind:class="{ active: button.sort == selectedSortMenu  }" v-on:click="updateSortState(button.sort)"
                     class="btn btn-block btn-info">{{ button.name }}</button>
         </div>
     </div>
@@ -28,7 +28,8 @@ export default {
   computed:{
     ...mapGetters([
       'hasErrors',
-      'selectedSortMenu'
+      'selectedSortMenu',
+      'isLoading'
     ])
   },
   created() {

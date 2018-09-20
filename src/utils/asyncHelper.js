@@ -5,7 +5,7 @@
 // import axios for api call
 import axios from 'axios'
 // 
-import { store } from './store/store'
+import { store } from '../store/store'
 
 const asyncAPI = (mutationType, weatherUrl, cityUrl) => {
   store.commit(mutationType + '_LOADING')
@@ -13,12 +13,10 @@ const asyncAPI = (mutationType, weatherUrl, cityUrl) => {
     .then(weatherResponse => {
       axios(cityUrl)
        .then(cityResponse => {
-         console.log(cityResponse)
-        store.commit(mutationType + '_SUCCESS', weatherResponse.data.data)
+         store.commit(mutationType + '_SUCCESS', weatherResponse.data.data)
        }).catch(error => {
         store.commit(mutationType + '_ERROR', error)
       })
-      
     })
     .catch(error => {
       store.commit(mutationType + '_ERROR', error)

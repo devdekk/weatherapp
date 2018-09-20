@@ -1,6 +1,7 @@
 // import config file and async helper that will call API
 import config from '../config';
-import doAsync from '../asyncHelper'
+import doAsync from '../utils/asyncHelper'
+import sortArray from '../utils/sortHelper'
 
 export default {
 
@@ -10,22 +11,10 @@ export default {
         // only update sort store if different sort is selected
         // I noticed clicking on sort buttons multiple times was messing with sort so I added this extra check
         if (store.selectedSort !== sort){
-            store.selectedSort = sort;
+            store.selectedSort = sort
 
-            // update the order of store weather data ** need to see if I can create as helper function
-            switch(sort) {
-                case 'sortByAZ':
-                    store.weatherData = store.weatherData.sort((a, b) => a._name.localeCompare(b._name))
-                    break
-                case 'sortByTemp':
-                    this.weatherData = store.weatherData.sort((a, b) => b._weatherTemp - a._weatherTemp)
-                    break
-                case 'sortByLastUpdate':
-                    this.weatherData = store.weatherData.sort((a, b) => new Date(b._weatherLastUpdated) - new Date(a._weatherLastUpdated))
-                    break
-                default:
-                store.weatherData = store.weatherData.sort((a, b) => a._name.localeCompare(b._name))
-            }
+            store.weatherData = sortArray(store.weatherData, store.selectedSort)
+            
         }   
     },
 
@@ -49,7 +38,7 @@ export default {
     },
 
     UPDATE_API_SUCCESS(store, data){
-        store.weatherData = data
+        store.weatherData = sortArray(data, store.selectedSort)
         store.isLoading = false
     },
 

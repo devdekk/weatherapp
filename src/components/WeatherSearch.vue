@@ -48,6 +48,7 @@ export default {
       }
   },
   methods: {
+    // This function calls a mutation to update search results
     updateSearch (event) {
         this.$store.commit('UPDATE_SEARCH', { country: this.countrySearch, condition: this.conditionSearch })
     }

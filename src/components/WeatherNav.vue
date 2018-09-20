@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     refresh () {
+       // refresh calls async action
         this.$store.dispatch('GET_DATA')
     }
   }

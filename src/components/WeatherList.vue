@@ -1,10 +1,12 @@
 <template>
 
     <div>
-
+    <!-- Show error compnent if in error state -->
     <weather-error v-show="hasErrors"></weather-error>
+    <!-- Show loading component if in loading state -->
     <weather-load v-show="isLoading"></weather-load>
     
+    <!-- List of weather data -->
     <div class="weatherList">
 
       <transition-group name="list" enter-active-class="animated bounceInRight" 
@@ -33,9 +35,11 @@
                 </div>
               </div>
           </li> 
+          <!-- Show child component if parent is in openChildList state -->
           <transition name="child" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <weather-list-child v-show="keyInChildList(item._name)" :item=item></weather-list-child>
           </transition>
+
         </ul>
       </transition-group>
     </div>

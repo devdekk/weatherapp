@@ -17,6 +17,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  // add state management to application
   store,
   router,
   components: { App },
